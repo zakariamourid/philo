@@ -6,13 +6,13 @@
 /*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:06:38 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/19 05:28:13 by zmourid          ###   ########.fr       */
+/*   Updated: 2024/09/20 02:42:07by zmourid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <cstdio>
 #include <pthread.h>
+#include <unistd.h>
 
 void p_data(t_data *data)
 {
@@ -36,7 +36,9 @@ int take_forks(t_philo *philo)
 //    if(philo->id == philo->data->nbr)
         philo->f_fork = &philo->data->forks[philo->id - 1];
         philo->s_fork = &philo->data->forks[philo->id % philo->data->nbr];
+        return 0;
 }
+
 int init_philos(t_data *data)
 {
     t_philo *philos;
@@ -55,22 +57,47 @@ int init_philos(t_data *data)
     {
         philos[i].id = i + 1;
         philos[i].data = data;
-        philos[i]
+        philos->f_fork = &data->forks[philos[i].id - 1];
+        philos->s_fork = &data->forks[philos[i].id % philos[i].data->nbr];
         i++;
     }
-    if(exit)
-        return(free(philos),free(data->forks),1);
+    // if(exit) return(free(philos),free(data->forks),1);
     data->philos = philos;
     return 0;
+}
+void *simple_routine(void *num)
+{
+    int *n = (int *) num;
+    printf("philo %d is created \n",*n);
+    return NULL;
+}
+int start_routine(t_data *data)
+{
+    int i = 0;
+    pthread_mutex_init(&data->lock, NULL);
+    while(i < data->nbr)
+    {
+        pthread_create(&data->philos[i].thread,NULL,&simple_routine,(void *)&data->philos[i].id);
+        usleep(50);
+        i++;
+    }
+    i = 0;
+    while(i < data->nbr)
+        pthread_join(data->philos[i++].thread, NULL);
+    printf("sf salina\n");
+    pthread_mutex_destroy(&data->lock);
+    return 1;
 }
 int main(int ac, char **av)
 {
     t_data data;
-    
+
     if(ac != 5 && ac != 6)
         return 0;
     if(init_data(&data, av,ac))
         return 1;
     if(init_philos(&data))
+        return 1;
+    if(start_routine(&data))
         return 1;
 }

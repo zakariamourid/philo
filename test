@@ -1,0 +1,45 @@
+#include "philo.h"
+#include <pthread.h>
+
+pthread_mutex_t lock;
+
+struct plong {
+    unsigned long value;
+    char padding[60];
+};
+
+void *compute(void *num)
+{
+	unsigned long *sum;
+	unsigned long i = 0;
+	sum = (unsigned long *) num;
+	pthread_mutex_lock(&lock);
+	while(i < 1000000000)
+	{
+		(*sum)+= 1;
+		i++;
+	}
+	pthread_mutex_unlock(&lock);
+	return NULL;
+}
+
+int main()
+{
+	pthread_t thread1;
+	pthread_t thread2;
+	unsigned long n1 = 0;
+
+	n1= 0;
+	pthread_mutex_init(&lock, NULL);
+	printf("n1 = %lu",n1);
+	fflush(stdout);
+	// compute((void *) &n1);
+	// compute((void *) &n2);
+	pthread_create(&thread1, NULL,&compute, (void *) &n1);
+	pthread_create(&thread2, NULL,&compute, (void *) &n1);
+	pthread_join(thread1, NULL);
+	pthread_join(thread2, NULL);
+	pthread_mutex_destroy(&lock);
+	printf("n1 = %lu",n1);
+
+}

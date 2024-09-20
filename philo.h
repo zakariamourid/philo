@@ -6,14 +6,13 @@
 /*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:06:34 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/19 05:08:33 by zmourid          ###   ########.fr       */
+/*   Updated: 2024/09/20 02:42:46 by zmourid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 #define PHILO_H
 
-#include <mutex>
 #include <unistd.h>
 #include <pthread.h>
 #include <stdlib.h>
@@ -36,6 +35,8 @@ typedef struct s_data
 	int	tt_sleep;
 	int	n_meals;
 	MUTEX	*forks;
+	MUTEX	lock;
+	int		i;
 	struct s_philo	*philos;
 } t_data;
 
