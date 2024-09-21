@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmourid <zmourid@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:06:34 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/20 18:43:46 by zmourid          ###   ########.fr       */
+/*   Updated: 2024/09/21 02:15:45 by zmourid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,29 @@
 #define UNLOCK pthread_mutex_unlock
 
 
+typedef struct s_fork
+{
+    MUTEX fork;
+    int		id;
+} t_fork;
+
 
 /* Shared ressources */
 typedef struct s_data
 {
 	int	nbr;
-	unsigned long begin;
+	pthread_t	architect;
+	long begin;
 	int	tt_die;
 	int tt_eat;
 	int	tt_sleep;
 	int	n_meals;
-	MUTEX	*forks;
+	t_fork	*forks;
 	MUTEX	lock;
 	int		i;
 	int	var;
 	int	finish;
+	long  tt_think;
 	struct s_philo	*philos;
 } t_data;
 
@@ -48,16 +56,20 @@ typedef struct s_philo
 {
 	int id;
 	pthread_t	thread;
-	MUTEX *right_fork;
-	MUTEX *left_fork;
-	unsigned long 	last_meal_time;
+	t_fork *right_fork;
+	t_fork *left_fork;
+	long 	last_meal_time;
 	int		meal_count;
 	t_data	*data;
+	int 	full;
 	
 } t_philo;
 
+
 int	ft_atoi(char *str);
 unsigned long	get_time(void);
-void	ft_sleep(unsigned long mili_seconds);
+int 	get_int(MUTEX *lock,int *n);
+int 	set_int(MUTEX *lock, int *n,int value);
+void	ft_sleep(unsigned long mili_seconds,t_data *data);
 
 #endif

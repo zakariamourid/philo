@@ -1,6 +1,6 @@
 CC=cc  
 SAN = -g3 -fsanitize=thread
-CFLAGS= -Wall  #$(SAN)
+CFLAGS= -Wall  $(SAN)
 
 SRC=$(wildcard *.c)
 OBJ= $(SRC:.c=.o)
