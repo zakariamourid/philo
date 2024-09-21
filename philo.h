@@ -6,7 +6,7 @@
 /*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:06:34 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/21 02:15:45 by zmourid          ###   ########.fr       */
+/*   Updated: 2024/09/21 19:10:36 by zmourid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ typedef struct s_data
 	int	tt_sleep;
 	int	n_meals;
 	t_fork	*forks;
-	MUTEX	lock;
+	MUTEX	meals_lock;
+	MUTEX	death;
+	MUTEX	print;
+	int		dead;
 	int		i;
 	int	var;
 	int	finish;
@@ -70,6 +73,6 @@ int	ft_atoi(char *str);
 unsigned long	get_time(void);
 int 	get_int(MUTEX *lock,int *n);
 int 	set_int(MUTEX *lock, int *n,int value);
-void	ft_sleep(unsigned long mili_seconds,t_data *data);
+void	ft_sleep(unsigned long mili_seconds);
 
 #endif

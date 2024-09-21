@@ -6,7 +6,7 @@
 /*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:06:29 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/21 02:16:37 by zmourid          ###   ########.fr       */
+/*   Updated: 2024/09/21 18:57:07 by zmourid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,13 @@ int 	set_int(MUTEX *lock, int *n,int value)
 	return value;
 }
 
-void	ft_sleep(unsigned long mili_seconds,t_data *data)
+void	ft_sleep(unsigned long mili_seconds)
 {
 	unsigned long	start_time;
 
 	start_time = get_time();
 	while ((get_time() - start_time) < mili_seconds)
-	{
-		 if(get_int(&data->lock, &data->finish))
-			break;
 		usleep(1);
-	}
 }
 
 int	ft_atoi(char *str)
