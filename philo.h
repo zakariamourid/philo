@@ -6,73 +6,72 @@
 /*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:06:34 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/21 19:10:36 by zmourid          ###   ########.fr       */
+/*   Updated: 2024/09/21 22:47:29 by zmourid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <unistd.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
+# include <limits.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include <sys/time.h>
-#include <limits.h>
+# include <time.h>
+# include <unistd.h>
 
-#define MUTEX pthread_mutex_t
-#define LOCK pthread_mutex_lock
-#define UNLOCK pthread_mutex_unlock
-
+# define MUTEX pthread_mutex_t
+# define LOCK pthread_mutex_lock
+# define UNLOCK pthread_mutex_unlock
+# define DESTROY pthread_mutex_destroy
 
 typedef struct s_fork
 {
-    MUTEX fork;
-    int		id;
-} t_fork;
-
+	MUTEX			fork;
+	int				id;
+}					t_fork;
 
 /* Shared ressources */
 typedef struct s_data
 {
-	int	nbr;
-	pthread_t	architect;
-	long begin;
-	int	tt_die;
-	int tt_eat;
-	int	tt_sleep;
-	int	n_meals;
-	t_fork	*forks;
-	MUTEX	meals_lock;
-	MUTEX	death;
-	MUTEX	print;
-	int		dead;
-	int		i;
-	int	var;
-	int	finish;
-	long  tt_think;
+	int				nbr;
+	pthread_t		architect;
+	long			begin;
+	int				tt_die;
+	int				tt_eat;
+	int				tt_sleep;
+	int				n_meals;
+	t_fork			*forks;
+	MUTEX			meals_lock;
+	MUTEX			death;
+	MUTEX			print;
+	int				dead;
+	int				full;
 	struct s_philo	*philos;
-} t_data;
+}					t_data;
 
 typedef struct s_philo
 {
-	int id;
-	pthread_t	thread;
-	t_fork *right_fork;
-	t_fork *left_fork;
-	long 	last_meal_time;
-	int		meal_count;
-	t_data	*data;
-	int 	full;
-	
-} t_philo;
+	int				id;
+	pthread_t		thread;
+	t_fork			*right_fork;
+	t_fork			*left_fork;
+	long			last_meal_time;
+	int				meal_count;
+	t_data			*data;
+	int				full;
 
+}					t_philo;
 
-int	ft_atoi(char *str);
-unsigned long	get_time(void);
-int 	get_int(MUTEX *lock,int *n);
-int 	set_int(MUTEX *lock, int *n,int value);
-void	ft_sleep(unsigned long mili_seconds);
+long				ft_atoi(char *str);
+unsigned long		get_time(void);
+int					unlock_both_forks(t_philo *philo);
+int					message(t_philo *philo, char *msg);
+void				*agent_smith(void *param);
+int					check_death(t_data *data);
+void				ft_sleep(unsigned long mili_seconds, t_data *data);
+int					start_routine(t_data *data);
+void				*matrix(void *info);
 
 #endif
