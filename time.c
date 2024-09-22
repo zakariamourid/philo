@@ -6,7 +6,7 @@
 /*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 22:42:22 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/21 22:42:27 by zmourid          ###   ########.fr       */
+/*   Updated: 2024/09/22 00:36:08 by zmourid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_sleep(unsigned long mili_seconds, t_data *data)
 	}
 }
 
-unsigned long	get_time(void)
+long	get_time(void)
 {
 	static int				init;
 	static struct timeval	start_time;

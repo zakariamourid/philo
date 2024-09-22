@@ -6,7 +6,7 @@
 /*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:06:34 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/21 22:47:29 by zmourid          ###   ########.fr       */
+/*   Updated: 2024/09/22 00:36:58 by zmourid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ typedef struct s_data
 	int				nbr;
 	pthread_t		architect;
 	long			begin;
-	int				tt_die;
-	int				tt_eat;
-	int				tt_sleep;
+	long			tt_die;
+	long			tt_eat;
+	long			tt_sleep;
 	int				n_meals;
 	t_fork			*forks;
 	MUTEX			meals_lock;
@@ -65,7 +65,7 @@ typedef struct s_philo
 }					t_philo;
 
 long				ft_atoi(char *str);
-unsigned long		get_time(void);
+long				get_time(void);
 int					unlock_both_forks(t_philo *philo);
 int					message(t_philo *philo, char *msg);
 void				*agent_smith(void *param);

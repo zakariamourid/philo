@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zmourid <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/21 22:43:37 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/21 22:48:06 by zmourid          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: zmourid <zmourid@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 04:06:38 by zmourid           #+#    #+#             */
-/*   Updated: 2024/09/20 02:42:07by zmourid          ###   ########.fr       */
+/*   Created: 2024/09/22 00:32:09 by zmourid           #+#    #+#             */
+/*   Updated: 2024/09/22 01:25:21 by zmourid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +29,8 @@ int	init_data(t_data *data, char **av, int ac)
 	data->n_meals = -1;
 	data->dead = 0;
 	data->full = 0;
+	data->philos = NULL;
+	data->forks = NULL;
 	if (ac == 6)
 		data->n_meals = ft_atoi(av[5]);
 	return (0);
@@ -106,7 +96,10 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (ac != 5 && ac != 6)
-		return (0);
+	{
+		printf("Invalid arg number\n");
+		return (1);
+	}
 	if (init_data(&data, av, ac))
 	{
 		printf("Error\n");
@@ -118,4 +111,5 @@ int	main(int ac, char **av)
 		return (1);
 	free(data.forks);
 	free(data.philos);
+	return (0);
 }

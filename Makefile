@@ -1,8 +1,8 @@
 CC=cc  
 SAN = -g3 -fsanitize=thread
-CFLAGS= -Wall  $(SAN)
+CFLAGS= -Wall -Werror -Wextra  $(SAN)
 
-SRC=$(wildcard *.c)
+SRC= architect.c matrix.c philo.c routine_start.c time.c utils.c
 OBJ= $(SRC:.c=.o)
 
 NAME = philo
